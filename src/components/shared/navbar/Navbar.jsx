@@ -67,11 +67,16 @@ const Navbar = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-40 w-full border-b border-separator">
+    <motion.nav
+      className="sticky top-0 z-40 w-full bg-white border-b border-separator"
+      initial={{ opacity: 0, y: -80 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+    >
       <header className="flex h-16 items-center justify-between max-w-7xl mx-auto px-5">
         <div className="flex items-center gap-4">
           <Button
-            className="md:hidden px-0 h-auto bg-transparent"
+            className="md:hidden px-0 h-auto bg-transparent color-tertiary"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"
           >
@@ -87,7 +92,7 @@ const Navbar = () => {
               className="w-8 h-8"
             />
 
-            <span className="text-lg font-bold">MediCare</span>
+            <span className="text-lg font-bold color-tertiary">MediCare</span>
           </Link>
         </div>
 
@@ -96,7 +101,9 @@ const Navbar = () => {
         <div>
           <div className="flex items-center">
             <Link href="/login">
-              <Button className={"px-0 h-auto bg-transparent"}>Login</Button>
+              <Button className={"px-0 h-auto bg-transparent color-tertiary"}>
+                Login
+              </Button>
             </Link>
 
             <Link href="/register">
@@ -125,7 +132,7 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 };
 
