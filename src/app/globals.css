@@ -1,2 +1,34 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+* {
+  color: #0c2f25;
+}
+
+a {
+  text-decoration: none;
+}
+
+.color-primary {
+  color: #17a2b8;
+}
+
+.color-secondary {
+  color: #0b0b3b;
+}
+
+.color-tertiary {
+  color: #0c2f25;
+}
+
+.color-muted {
+  color: #9b9b9b;
+}
+
+.bg-primary {
+  background-color: #17a2b8;
+}
+
+.bg-secondary {
+  background-color: #0b0b3b;
+}
