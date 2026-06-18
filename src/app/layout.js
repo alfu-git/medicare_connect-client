@@ -2,6 +2,7 @@ import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/Footer";
+import { Toaster } from "react-hot-toast";
 
 const rethinkSans = Rethink_Sans({
   variable: "--font-rethink_sans",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
