@@ -1,5 +1,5 @@
-import DoctorCard from "@/components/findDoctorsPage/DoctorCard";
-import { getAllDoctors } from "@/lib/api/data";
+import DoctorsCardContainer from "@/components/findDoctorsPage/DoctorsCardContainer";
+import { getAllDoctors } from "@/lib/api/doctor";
 import React from "react";
 
 export const metadata = {
@@ -29,7 +29,7 @@ const FindDoctorsPage = async () => {
 
           {/* content */}
           <div>
-            <DoctorCard doctors={doctors} />
+            <DoctorsCardContainer doctors={doctors} />
           </div>
         </div>
       </div>

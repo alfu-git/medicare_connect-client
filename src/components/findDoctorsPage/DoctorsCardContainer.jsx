@@ -4,8 +4,9 @@ import { Button } from "@heroui/react";
 import Image from "next/image";
 import { IoArrowRedoSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
-export default function DoctorCard({ doctors }) {
+export default function DoctorsCardContainer({ doctors }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
       {doctors.map((doctor, index) => (
@@ -43,9 +44,11 @@ export default function DoctorCard({ doctors }) {
                 <span className="color-muted">{doctor?.qualifications}</span>
               </div>
 
-              <Button className="w-12 h-12 bg-white shadow rounded-full color-primary">
-                <IoArrowRedoSharp className="w-7 h-7" />
-              </Button>
+              <Link href={`/find-doctors/${doctor?._id}`}>
+                <Button className="w-12 h-12 bg-white shadow rounded-full color-primary">
+                  <IoArrowRedoSharp className="w-7 h-7" />
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>
