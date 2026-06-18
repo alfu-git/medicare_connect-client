@@ -10,7 +10,6 @@ import {
   TextField,
 } from "@heroui/react";
 
-// import { FaGoogle } from "react-icons/fa";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -33,6 +32,8 @@ const LogInForm = () => {
     const userData = Object.fromEntries(formData.entries());
 
     try {
+      setLoading(true);
+
       const { data, error } = await authClient.signIn.email({
         email: userData.email,
         password: userData.password,
@@ -51,25 +52,6 @@ const LogInForm = () => {
       }
     } catch (err) {
       console.log(err);
-    }
-
-    setLoading(true);
-
-    const { data, error } = await authClient.signIn.email({
-      email: userData.email,
-      password: userData.password,
-      callbackURL: "/",
-    });
-
-    setLoading(false);
-
-    if (error) {
-      toast.error(<h6 className="font-bold">{error.message}</h6>);
-    }
-
-    if (data) {
-      toast.success(<h6 className="font-bold">Login Successful</h6>);
-      router.push("/");
     }
   };
 

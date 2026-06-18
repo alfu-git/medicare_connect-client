@@ -57,7 +57,6 @@ const RegisterForm = () => {
         image: imageUrl?.url,
         password: password,
         role,
-        plan: "free",
       });
 
       setLoading(false);

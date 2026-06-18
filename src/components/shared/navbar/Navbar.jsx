@@ -70,6 +70,10 @@ const Navbar = () => {
     </>
   );
 
+  if (pathname.startsWith("/dashboard")) {
+    return null;
+  }
+
   return (
     <motion.nav
       className="sticky top-0 z-40 w-full bg-white border-b border-separator"
