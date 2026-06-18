@@ -7,11 +7,15 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { RiMenu2Line } from "react-icons/ri";
 import { RxCross2 } from "react-icons/rx";
+import { authClient } from "@/lib/auth-client";
+import AvatarDropdown from "./AvatarDropdown";
+import DNALoader from "../loading/DNALoader";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const user = null;
+  const { data: session, isPending } = authClient.useSession();
+  const user = session?.user;
 
   const pathname = usePathname();
 
@@ -99,19 +103,25 @@ const Navbar = () => {
         <ul className="hidden items-center gap-4 md:flex">{navLinks}</ul>
 
         <div>
-          <div className="flex items-center">
-            <Link href="/login">
-              <Button className={"px-0 h-auto bg-transparent color-tertiary"}>
-                Login
-              </Button>
-            </Link>
+          {isPending ? (
+            <DNALoader height={"40"} width={"40"} />
+          ) : user ? (
+            <AvatarDropdown user={user} />
+          ) : (
+            <div className="flex items-center">
+              <Link href="/login">
+                <Button className={"px-0 h-auto bg-transparent color-tertiary"}>
+                  Login
+                </Button>
+              </Link>
 
-            <Link href="/register">
-              <Button className={"px-0 h-auto bg-transparent color-primary"}>
-                /Register
-              </Button>
-            </Link>
-          </div>
+              <Link href="/register">
+                <Button className={"px-0 h-auto bg-transparent color-primary"}>
+                  /Register
+                </Button>
+              </Link>
+            </div>
+          )}
         </div>
       </header>
 
