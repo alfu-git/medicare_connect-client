@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   Button,
@@ -61,10 +62,8 @@ const RegisterForm = () => {
 
       setLoading(false);
 
-      console.log({ data, error });
-
       if (error) {
-        toast.error(<p className="text-black font-bold">{error.message}</p>);
+        toast.error(<p className="font-bold">{error.message}</p>);
       }
 
       if (data) {
@@ -152,6 +151,14 @@ const RegisterForm = () => {
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (!file) return;
+
+                const maxSize = 5 * 1024 * 1024;
+
+                if (file.size > maxSize) {
+                  alert("Image size must be less than 5MB");
+                  e.target.value = "";
+                  return;
+                }
 
                 setImageFile(file);
                 setPreview(URL.createObjectURL(file));
@@ -260,7 +267,7 @@ const RegisterForm = () => {
         {/* role */}
         <div>
           <RadioGroup name="role" value={value} onChange={setValue}>
-            <Label>Role</Label>
+            <Label className="color-tertiary">Role</Label>
 
             <div className="flex gap-5 items-center">
               <Radio value="patient">
@@ -269,7 +276,7 @@ const RegisterForm = () => {
                     <Radio.Indicator />
                   </Radio.Control>
 
-                  <span>Patient</span>
+                  <span className="color-tertiary">Patient</span>
                 </Radio.Content>
               </Radio>
 
@@ -279,13 +286,14 @@ const RegisterForm = () => {
                     <Radio.Indicator />
                   </Radio.Control>
 
-                  <span>Doctor</span>
+                  <span className="color-tertiary">Doctor</span>
                 </Radio.Content>
               </Radio>
             </div>
           </RadioGroup>
         </div>
 
+        {/* register button */}
         <Button
           isDisabled={loading}
           type="submit"
@@ -297,7 +305,7 @@ const RegisterForm = () => {
         </Button>
       </Form>
 
-      <p className="my-6 flex gap-1 flex-wrap justify-center text-xs text-center">
+      <p className="my-6 flex gap-1 flex-wrap justify-center color-tertiary text-xs text-center">
         <span>By creating an account, you agree to our</span>
         <Link href={"/"} className="text-[#17a2b8] hover:text-[#17a2b8]/80">
           Terms of Service
@@ -308,7 +316,7 @@ const RegisterForm = () => {
         </Link>
       </p>
 
-      <p className="text-center text-sm">
+      <p className="text-center color-tertiary text-sm">
         Already have an account?{" "}
         <Link
           href="/login"
