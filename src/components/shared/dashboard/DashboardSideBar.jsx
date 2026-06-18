@@ -40,7 +40,7 @@ export async function DashboardSideBar() {
 
         <Drawer.Backdrop>
           <Drawer.Content placement="left">
-            <Drawer.Dialog className={'bg-secondary'}>
+            <Drawer.Dialog className={"bg-secondary"}>
               <Drawer.CloseTrigger />
               <Drawer.Header>
                 <Drawer.Heading>{userSec}</Drawer.Heading>

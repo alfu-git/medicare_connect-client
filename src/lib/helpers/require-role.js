@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { getUser } from "./get-user";
 
 export const requireRole = async (role) => {
