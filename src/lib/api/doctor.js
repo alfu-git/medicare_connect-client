@@ -1,7 +1,13 @@
 import { fetchData } from "../server/server";
 
-export const getAllDoctors = async (searchQueryString) => {
-  return await fetchData(`/doctors?${searchQueryString}`);
+export const getAllDoctors = async (page, searchValue, sortValue) => {
+  if (!page) {
+    page = 1;
+  }
+
+  return fetchData(
+    `/doctors?page=${page}&search=${searchValue}&sortBy=${sortValue}`,
+  );
 };
 
 export const getDoctorById = async (doctorId) => {
