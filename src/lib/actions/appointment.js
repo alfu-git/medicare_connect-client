@@ -1,5 +1,6 @@
+'use server'
 import { serverMutation } from "../server/server";
 
-export const postAppointmentData = async (appointmentData) => {
-  return await serverMutation("/appointments", appointmentData, "POST");
+export const postAppointmentData = async (data) => {
+  return await serverMutation("/appointments", data, "POST");
 };

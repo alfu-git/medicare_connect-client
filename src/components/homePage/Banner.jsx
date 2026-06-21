@@ -3,6 +3,7 @@
 import React from "react";
 import { Button } from "@heroui/react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Banner = () => {
   return (
@@ -45,12 +46,14 @@ const Banner = () => {
               transition={{ delay: 0.4, duration: 0.7 }}
               viewport={{ once: false }}
             >
-              <Button
-                size="lg"
-                className="bg-primary text-white px-4 sm:px-8 py-3 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:scale-105 duration-500 transition-all"
-              >
-                Book Appointment
-              </Button>
+              <Link href={"/find-doctors"}>
+                <Button
+                  size="lg"
+                  className="bg-primary text-white px-4 sm:px-8 py-3 sm:py-6 text-base sm:text-lg font-semibold rounded-xl shadow-lg hover:scale-105 duration-500 transition-all"
+                >
+                  Find Doctors
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>

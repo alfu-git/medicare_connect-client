@@ -2,6 +2,7 @@ import { Rethink_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/navbar/Navbar";
 import Footer from "@/components/shared/Footer";
+import 'animate.css';
 import { Toaster } from "react-hot-toast";
 
 const rethinkSans = Rethink_Sans({

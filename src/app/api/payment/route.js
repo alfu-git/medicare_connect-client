@@ -14,9 +14,10 @@ export async function POST(request) {
     const doctorName = formData.get("doctorName");
     const doctorId = formData.get("doctorId");
     const consultationFee = formData.get("consultationFee");
-
-    // const body = await request.json();
-    // const { doctorId, doctorName, consultationFee, appointmentId } = body;
+    const patientId = formData.get("patientId");
+    const appointmentDate = formData.get("appointmentDate");
+    const appointmentTime = formData.get("appointmentTime");
+    const symptoms = formData.get("symptoms");
 
     const session = await stripe.checkout.sessions.create({
       customer_email: user?.email,
@@ -33,16 +34,18 @@ export async function POST(request) {
         },
       ],
       metadata: {
-        patientId: user?.id,
+        patientId: patientId || user?.id,
         doctorId,
         doctorName,
         consultationFee: Number(consultationFee),
-        // appointmentId,
+        appointmentDate,
+        appointmentTime,
+        symptoms,
       },
       mode: "payment",
       success_url: `${origin}/find-doctors/${doctorId}/success?session_id={CHECKOUT_SESSION_ID}`,
     });
-    return NextResponse.redirect(session.url || 303);
+    return NextResponse.redirect(session.url, 303);
   } catch (err) {
     console.log("error: ", err);
     return NextResponse.json(

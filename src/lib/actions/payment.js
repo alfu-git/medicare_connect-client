@@ -1,4 +1,4 @@
-
+"use server";
 import { serverMutation } from "../server/server";
 
 export const savePaymentData = async (data) => {

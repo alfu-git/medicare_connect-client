@@ -1,4 +1,5 @@
 import PaymentSuccess from "@/components/paymentSuccessPage/PaymentSuccess";
+import { postAppointmentData } from "@/lib/actions/appointment";
 import { savePaymentData } from "@/lib/actions/payment";
 import { stripe } from "@/lib/stripe";
 import { redirect } from "next/navigation";
@@ -23,11 +24,27 @@ export default async function Success({ searchParams }) {
   }
 
   if (status === "complete") {
-    await savePaymentData({
-      ...metadata,
-      sessionId: session_id,
-      transactionId: payment_intent?.id,
-    });
+    console.log("payment success");
+    try {
+      await savePaymentData({
+        ...metadata,
+        sessionId: session_id,
+        transactionId: payment_intent?.id,
+      });
+
+      // Save the appointment now that payment is confirmed
+      await postAppointmentData({
+        patientId: metadata.patientId,
+        doctorId: metadata.doctorId,
+        appointmentDate: metadata.appointmentDate,
+        appointmentTime: metadata.appointmentTime,
+        symptoms: metadata.symptoms,
+        appointmentStatus: "pending",
+        paymentStatus: "paid",
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     return (
       <section id="success">

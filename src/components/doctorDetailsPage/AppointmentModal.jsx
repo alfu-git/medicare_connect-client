@@ -27,34 +27,6 @@ const AppointmentModal = ({ doctor }) => {
     !symptomsValue ||
     symptomsValue.length < 20;
 
-  const handleOnSubmit = async (e) => {
-    e.preventDefault();
-
-    const appointmentData = {
-      patientId: user?.id,
-      doctorId: doctor?._id,
-      appointmentDate: appointmentDayValue,
-      appointmentTime: appointmentTimeValue,
-      symptoms: symptomsValue,
-      appointmentStatus: "pending",
-      paymentStatus: "unpaid",
-    };
-
-    // 1. appointment save
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/appointments`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(appointmentData),
-      },
-    );
-    const data = await res.json();
-    const appointmentId = data?.appointmentId;
-  };
-
   return (
     <Modal>
       <Button
@@ -89,7 +61,8 @@ const AppointmentModal = ({ doctor }) => {
 
             <Modal.Body className="p-6">
               <Surface variant="default">
-                <form onSubmit={handleOnSubmit} className="flex flex-col gap-4">
+                {/* Appointment fields (no separate form needed) */}
+                <div className="flex flex-col gap-4">
                   <div className="flex gap-3 items-center">
                     {/* appointment day */}
                     <Select
@@ -167,10 +140,11 @@ const AppointmentModal = ({ doctor }) => {
                       </p>
                     )}
                   </div>
-                </form>
+                </div>
 
                 <div className="mt-3 flex gap-2 justify-end">
                   <Button
+                    type="button"
                     onClick={() => {
                       setAppointmentDayValue("");
                       setAppointmentTimeValue("");
@@ -181,19 +155,46 @@ const AppointmentModal = ({ doctor }) => {
                     Clear
                   </Button>
 
+                  {/* Single unified form — carries both doctor + appointment data */}
                   <form action={"/api/payment"} method="POST">
+                    {/* Doctor data */}
                     <input
                       name="doctorName"
-                      value={doctor?.doctorName}
+                      value={doctor?.doctorName || ""}
                       type="hidden"
                     />
-                    <input name="doctorId" value={doctor?._id} type="hidden" />
+                    <input
+                      name="doctorId"
+                      value={doctor?._id || ""}
+                      type="hidden"
+                    />
                     <input
                       name="consultationFee"
-                      value={doctor?.consultationFee}
+                      value={doctor?.consultationFee || ""}
                       type="hidden"
                     />
 
+                    {/* Appointment data from state */}
+                    <input
+                      name="patientId"
+                      value={user?.id || ""}
+                      type="hidden"
+                    />
+                    <input
+                      name="appointmentDate"
+                      value={appointmentDayValue}
+                      type="hidden"
+                    />
+                    <input
+                      name="appointmentTime"
+                      value={appointmentTimeValue}
+                      type="hidden"
+                    />
+                    <input
+                      name="symptoms"
+                      value={symptomsValue}
+                      type="hidden"
+                    />
                     <Button type="submit" isDisabled={formIncomplete}>
                       Booked
                     </Button>
