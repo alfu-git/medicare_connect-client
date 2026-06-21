@@ -159,13 +159,23 @@ const AppointmentModal = ({ doctor }) => {
                   <form action={"/api/payment"} method="POST">
                     {/* Doctor data */}
                     <input
+                      name="doctorId"
+                      value={doctor?._id || ""}
+                      type="hidden"
+                    />
+                    <input
                       name="doctorName"
                       value={doctor?.doctorName || ""}
                       type="hidden"
                     />
                     <input
-                      name="doctorId"
-                      value={doctor?._id || ""}
+                      name="doctorImage"
+                      value={doctor?.profileImage || ""}
+                      type="hidden"
+                    />
+                    <input
+                      name="doctorSpecialization"
+                      value={doctor?.specialization || ""}
                       type="hidden"
                     />
                     <input

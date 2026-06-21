@@ -13,3 +13,7 @@ export const getAllDoctors = async (page, searchValue, sortValue) => {
 export const getDoctorById = async (doctorId) => {
   return await fetchData(`/doctors/${doctorId}`);
 };
+
+export const getPatientFavDoctor = async (patientId) => {
+  return fetchData(`/favorite-doctors/${patientId}`);
+};

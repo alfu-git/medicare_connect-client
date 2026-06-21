@@ -24,7 +24,6 @@ export default async function Success({ searchParams }) {
   }
 
   if (status === "complete") {
-    console.log("payment success");
     try {
       await savePaymentData({
         ...metadata,
@@ -36,7 +35,10 @@ export default async function Success({ searchParams }) {
       await postAppointmentData({
         patientId: metadata.patientId,
         doctorId: metadata.doctorId,
-        appointmentDate: metadata.appointmentDate,
+        doctorName: metadata.doctorName,
+        doctorImage: metadata.doctorImage,
+        doctorSpecialization: metadata.doctorSpecialization,
+        appointmentDay: metadata.appointmentDay,
         appointmentTime: metadata.appointmentTime,
         symptoms: metadata.symptoms,
         appointmentStatus: "pending",

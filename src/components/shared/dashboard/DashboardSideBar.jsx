@@ -1,49 +1,46 @@
 import { LayoutSideContentLeft } from "@gravity-ui/icons";
 import { Button, Drawer } from "@heroui/react";
 import DashboardNavContent from "./DashboardNavContent";
-import Image from "next/image";
-import { getUser } from "@/lib/helpers/get-user";
+import Link from "next/link";
+import { RiArrowLeftLongLine } from "react-icons/ri";
 
 export async function DashboardSideBar() {
-  const user = await getUser();
-
-  const userSec = (
-    <div className="mb-5 mx-3 flex gap-3 items-center">
-      <Image
-        src={user?.image}
-        alt={user?.name}
-        width={80}
-        height={80}
-        className="rounded-full border border-[#17a2b8]"
-      />
-
-      <div>
-        <h3 className="text-white!">{user?.name}</h3>
-        <p className="text-white opacity-90 text-sm">{user?.email}</p>
-      </div>
-    </div>
+  const backHomeBtn = (
+    <Link href={"/"}>
+      <Button
+        className={
+          "mb-3 mx-7 px-0 h-auto bg-transparent font-medium color-muted"
+        }
+      >
+        <RiArrowLeftLongLine />
+        Back Home
+      </Button>
+    </Link>
   );
+
   return (
     <>
-      <aside className="hidden w-70 pt-5 shrink-0 border-r border-default lg:block bg-secondary">
-        {userSec}
+      <aside className="hidden w-60 pt-5 shrink-0 border-r border-default lg:block bg-secondary">
+        {backHomeBtn}
         <DashboardNavContent />
       </aside>
 
       <Drawer>
         <Button
           variant="secondary"
-          className={"lg:hidden ml-2 px-0 h-auto bg-transparent"}
+          className={
+            "sticky top-0 z-50 lg:hidden ml-2 px-0 h-auto bg-transparent"
+          }
         >
           <LayoutSideContentLeft />
         </Button>
 
         <Drawer.Backdrop>
           <Drawer.Content placement="left">
-            <Drawer.Dialog className={"bg-secondary"}>
-              <Drawer.CloseTrigger />
+            <Drawer.Dialog className={"w-60 px-0 bg-secondary"}>
+              <Drawer.CloseTrigger className="w-5 h-5" />
               <Drawer.Header>
-                <Drawer.Heading>{userSec}</Drawer.Heading>
+                <Drawer.Heading>{backHomeBtn}</Drawer.Heading>
               </Drawer.Header>
               <Drawer.Body>
                 <DashboardNavContent />

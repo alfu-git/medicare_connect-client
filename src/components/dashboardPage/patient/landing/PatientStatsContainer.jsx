@@ -7,7 +7,7 @@ import {
   FaMoneyBillWave,
   FaCheckCircle,
 } from "react-icons/fa";
-import CountUpValue from "@/components/shared/dashboard/CountUpValue";
+import CountUpValue from "@/components/shared/CountUpValue";
 
 const PatientStatsContainer = ({ appointments = [], payments = [] }) => {
   const completedAppointments = appointments.filter(

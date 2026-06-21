@@ -11,11 +11,13 @@ export async function POST(request) {
     const user = await getUser();
 
     const formData = await request.formData();
-    const doctorName = formData.get("doctorName");
     const doctorId = formData.get("doctorId");
+    const doctorName = formData.get("doctorName");
+    const doctorImage = formData.get("doctorImage");
+    const doctorSpecialization = formData.get("doctorSpecialization");
     const consultationFee = formData.get("consultationFee");
     const patientId = formData.get("patientId");
-    const appointmentDate = formData.get("appointmentDate");
+    const appointmentDay = formData.get("appointmentDate");
     const appointmentTime = formData.get("appointmentTime");
     const symptoms = formData.get("symptoms");
 
@@ -37,8 +39,10 @@ export async function POST(request) {
         patientId: patientId || user?.id,
         doctorId,
         doctorName,
+        doctorImage,
+        doctorSpecialization,
         consultationFee: Number(consultationFee),
-        appointmentDate,
+        appointmentDay,
         appointmentTime,
         symptoms,
       },

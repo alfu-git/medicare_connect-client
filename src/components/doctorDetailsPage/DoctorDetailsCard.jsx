@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { FaCheckCircle, FaRegDotCircle } from "react-icons/fa";
 import { IoCalendarOutline } from "react-icons/io5";
 import { MdAccessTime, MdBlock } from "react-icons/md";
-import { Button } from "@heroui/react";
 import { LuHospital } from "react-icons/lu";
 import { HiOutlineCurrencyBangladeshi } from "react-icons/hi";
 import AppointmentModal from "./AppointmentModal";
@@ -144,31 +143,6 @@ const DoctorDetailsCard = ({ doctor }) => {
 
         {/* CTA BUTTON */}
         <div className="mt-8">
-          {/* <form action={"/api/payment"} method="POST">
-            <input name="doctorName" value={doctor?.doctorName} type="hidden" />
-            <input name="doctorId" value={doctor?._id} type="hidden" />
-            <input
-              name="consultationFee"
-              value={doctor?.consultationFee}
-              type="hidden"
-            />
-
-            <Button
-              type="submit"
-              disabled={doctor?.verificationStatus !== "verified"}
-              className={`w-full py-6 text-lg rounded-xl transition-all duration-300 
-                      ${
-                        doctor?.verificationStatus === "verified"
-                          ? "bg-[#0b0b3b] hover:bg-primary"
-                          : "bg-gray-400 cursor-not-allowed"
-                      }`}
-            >
-              {doctor?.verificationStatus === "suspended"
-                ? "Unavailable"
-                : "Book Appointment"}
-            </Button>
-          </form> */}
-
           <AppointmentModal doctor={doctor} />
         </div>
       </div>
