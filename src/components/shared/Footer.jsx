@@ -16,7 +16,7 @@ const Footer = () => {
 
   return (
     <motion.footer
-      className="bg-secondary mt-10 text-white"
+      className="bg-secondary text-white"
       initial={{ opacity: 0, y: 80 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: false }}

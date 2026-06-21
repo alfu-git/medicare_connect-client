@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 }
 
 const DoctorDetailsPage = async ({ params }) => {
-  const { doctorId } = await params;
+  const {doctorId} = await params;
   const doctor = await getDoctorById(doctorId);
 
   return (

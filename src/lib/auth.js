@@ -26,12 +26,9 @@ export const auth = betterAuth({
       role: {
         defaultValue: "patient",
       },
-      plan: {
-        defaultValue: "free",
-      },
       status: {
-        defaultValue: "active"
-      }
+        defaultValue: "active",
+      },
     },
   },
   session: {

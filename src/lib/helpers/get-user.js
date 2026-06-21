@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import { auth } from "../auth";
+import { fetchData } from "../server/server";
 
 export const getUser = async () => {
   const session = await auth.api.getSession({
@@ -7,4 +8,9 @@ export const getUser = async () => {
   });
 
   return session?.user || null;
+};
+
+export const getUserFromDB = async () => {
+  const user = await getUser();
+  return await fetchData(`/user/${user?.id}`);
 };
