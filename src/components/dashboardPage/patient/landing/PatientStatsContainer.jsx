@@ -8,6 +8,7 @@ import {
   FaCheckCircle,
 } from "react-icons/fa";
 import CountUpValue from "@/components/shared/CountUpValue";
+import { TbCurrencyTaka } from "react-icons/tb";
 
 const PatientStatsContainer = ({ appointments = [], payments = [] }) => {
   const completedAppointments = appointments.filter(
@@ -49,6 +50,9 @@ const PatientStatsContainer = ({ appointments = [], payments = [] }) => {
           <motion.div
             key={index}
             whileHover={{ scale: 1.05 }}
+            transition={{
+              duration: 0.5,
+            }}
             className="relative rounded-3xl p-6 overflow-hidden backdrop-blur-xl bg-white/60 border border-white/30 shadow-lg animate__animated animate__zoomIn"
           >
             {/* Gradient Glow */}
@@ -75,8 +79,11 @@ const PatientStatsContainer = ({ appointments = [], payments = [] }) => {
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className="text-3xl font-bold mt-2 color-secondary"
+                  className={`text-3xl font-bold mt-2 color-secondary ${stat.title === "Total Payments" && "flex items-center"}`}
                 >
+                  {stat.title === "Total Payments" && (
+                    <TbCurrencyTaka className="-ml-1.5" />
+                  )}
                   <CountUpValue value={stat.value} duration={2} />
                 </motion.h2>
               </div>

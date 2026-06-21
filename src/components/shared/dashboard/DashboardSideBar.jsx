@@ -20,7 +20,7 @@ export async function DashboardSideBar() {
 
   return (
     <>
-      <aside className="hidden w-60 pt-5 shrink-0 border-r border-default lg:block bg-secondary">
+      <aside className="hidden z-50 w-60 pt-5 shrink-0 border-r border-default lg:block bg-secondary">
         {backHomeBtn}
         <DashboardNavContent />
       </aside>
@@ -29,10 +29,11 @@ export async function DashboardSideBar() {
         <Button
           variant="secondary"
           className={
-            "sticky top-0 z-50 lg:hidden ml-2 px-0 h-auto bg-transparent"
+            "sticky top-1 z-50 lg:hidden ml-2  h-8 bg-[#0b0b3b]/95 rounded-sm text-white/90"
           }
         >
           <LayoutSideContentLeft />
+          <span className="mb-0.5">Menu</span>
         </Button>
 
         <Drawer.Backdrop>

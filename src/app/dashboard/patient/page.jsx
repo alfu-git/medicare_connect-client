@@ -8,6 +8,15 @@ import { getPaymentsByPatientId } from "@/lib/api/payment";
 import { getUser } from "@/lib/helpers/get-user";
 import React from "react";
 
+export async function generateMetadata({ params }) {
+  const user = await getUser();
+
+  return {
+    title: `${user?.name || "User"} - Dashboard | MediCare Connect`,
+    description: `${user?.name || "User"}'s personal dashboard on MediCare Connect. Manage appointments, view medical records, track payments, and access healthcare services.`,
+  };
+}
+
 const PatientDashboardHomePage = async () => {
   const user = await getUser();
 
