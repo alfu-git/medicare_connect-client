@@ -6,7 +6,7 @@ export const postAppointmentData = async (data) => {
   return await serverMutation("/appointments", data, "POST");
 };
 
-export const deleteUpcomingAppointment = async (appointmentId) => {
+export const deleteAppointment = async (appointmentId) => {
   const res = await serverMutation(
     `/appointments/${appointmentId}`,
     {},
@@ -15,6 +15,20 @@ export const deleteUpcomingAppointment = async (appointmentId) => {
 
   if (res?.deletedCount > 0) {
     revalidatePath("/dashboard/patient");
+  }
+
+  return res;
+};
+
+export const updateAppointment = async (appointmentId, updatedAppointment) => {
+  const res = await serverMutation(
+    `/appointments/${appointmentId}`,
+    updatedAppointment,
+    "PATCH",
+  );
+
+  if (res?.modifiedCount > 0) {
+    revalidatePath("/dashboard/patient/my-appointments");
   }
 
   return res;

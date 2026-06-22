@@ -25,11 +25,12 @@ export default async function Success({ searchParams }) {
 
   if (status === "complete") {
     try {
-      await savePaymentData({
+      const res = await savePaymentData({
         ...metadata,
         sessionId: session_id,
         transactionId: payment_intent?.id,
       });
+      const paymentId = res?.insertedId;
 
       // Save the appointment now that payment is confirmed
       await postAppointmentData({
@@ -43,6 +44,7 @@ export default async function Success({ searchParams }) {
         symptoms: metadata.symptoms,
         appointmentStatus: "pending",
         paymentStatus: "paid",
+        paymentId,
       });
     } catch (err) {
       console.log(err);

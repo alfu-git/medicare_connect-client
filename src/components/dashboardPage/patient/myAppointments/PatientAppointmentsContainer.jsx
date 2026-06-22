@@ -1,13 +1,35 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { FaCalendarAlt, FaClock } from "react-icons/fa";
+import { Button } from "@heroui/react";
+import DeleteAlertDialog from "@/components/shared/DeleteAlertDialog";
+import { deleteAppointment } from "@/lib/actions/appointment";
+import RescheduleModal from "./RescheduleModal";
+import Link from "next/link";
 
 const PatientAppointmentsContainer = ({ appointments }) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleDelete = async (appointmentId) => {
+    try {
+      setLoading(true);
+      const res = await deleteAppointment(appointmentId);
+
+      if (res?.deletedCount > 0) {
+        toast.success("Appointment Cancel Successful");
+      }
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="mt-10 space-y-6">
+    <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-5">
       {appointments.map((appointment, index) => (
         <motion.div
           key={appointment?._id}
@@ -18,55 +40,88 @@ const PatientAppointmentsContainer = ({ appointments }) => {
             delay: index * 0.15,
             ease: "easeOut",
           }}
-          viewport={{ once: false }}
           className="group relative overflow-hidden rounded-3xl p-px bg-linear-to-r from-[#17a2b8]/30 to-[#0b0b3b]/30"
         >
-          {/* Glass Card */}
-          <div className="relative flex justify-between p-5 rounded-3xl backdrop-blur-xl bg-white/70 border border-white/30 shadow-lg hover:shadow-2xl transition-all duration-500">
-            {/* Glow Hover Effect */}
-            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-r from-[#17a2b8]/10 to-[#0b0b3b]/10 rounded-3xl" />
+          {/* Card */}
+          <div className="relative p-6 rounded-3xl backdrop-blur-xl bg-white/70 border border-white/30 shadow-lg hover:shadow-2xl transition-all duration-500 flex flex-col justify-between h-full">
+            {/* Top Section */}
+            <div className="flex items-start justify-between gap-4">
+              {/* Doctor Info */}
+              <div className="flex items-center gap-4">
+                <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-white shadow-md">
+                  <Image
+                    src={appointment?.doctorImage}
+                    alt="doctor"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
 
-            <div className="flex flex-col sm:flex-row sm:items-center gap-5">
-              {/* Doctor Image */}
-              <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-white shadow-md">
-                <Image
-                  src={appointment?.doctorImage}
-                  alt="doctor"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Info */}
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-[#0c2f25]">
-                  {appointment?.doctorName}
-                </h3>
-
-                <p className="text-sm text-[#6d8276]">
-                  {appointment?.doctorSpecialization}
-                </p>
-
-                {/* Date & Time */}
-                <div className="flex items-center gap-4 mt-2 text-sm text-[#0c2f25]">
-                  <div className="flex items-center gap-2">
-                    <FaCalendarAlt className="text-[#17a2b8]" />
-                    {appointment?.appointmentDay}
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <FaClock className="text-[#17a2b8]" />
-                    {appointment?.appointmentTime}
-                  </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#0c2f25]">
+                    {appointment?.doctorName}
+                  </h3>
+                  <p className="text-sm text-[#6d8276]">
+                    {appointment?.doctorSpecialization}
+                  </p>
                 </div>
               </div>
+
+              {/* Status */}
+              <div
+                className={`
+                px-3 py-1 text-xs font-medium rounded-full whitespace-nowrap ${appointment?.appointmentStatus === "pending" ? "bg-yellow-500/10 text-yellow-500" : "bg-green-500/10 text-green-500"}`}
+              >
+                {appointment?.appointmentStatus.charAt(0).toUpperCase() +
+                  appointment?.appointmentStatus.slice(1)}
+              </div>
             </div>
 
-            {/* Status Badge */}
-            <div className="max-w-fit max-h-fit px-3 py-1 text-xs font-medium rounded-full bg-[#17a2b8]/10 text-[#17a2b8]">
-              {appointment?.appointmentStatus.charAt(0).toUpperCase() +
-                appointment?.appointmentStatus.slice(1)}
+            {/* Date & Time */}
+            <div className="flex items-center gap-6 mt-5 text-sm text-[#0c2f25]">
+              <div className="flex items-center gap-2">
+                <FaCalendarAlt className="text-[#17a2b8]" />
+                {appointment?.appointmentDay}
+              </div>
+
+              <div className="flex items-center gap-2">
+                <FaClock className="text-[#17a2b8]" />
+                {appointment?.appointmentTime}
+              </div>
             </div>
+
+            {/* Actions */}
+            <div className="mt-5 pt-4 border-t flex justify-between items-center">
+              <Link
+                href={`/dashboard/patient/my-appointments/${appointment?._id}`}
+              >
+                <Button className="px-0 h-auto bg-transparent color-secondary text-base">
+                  Details
+                </Button>
+              </Link>
+
+              <div className="flex gap-4">
+                <RescheduleModal appointment={appointment} />
+
+                <DeleteAlertDialog
+                  triggerBtnClass={
+                    "px-0 h-auto bg-transparent text-base text-red-500 font-bold"
+                  }
+                  triggerBtnText={"Cancel"}
+                  dialogHeading={"Cancel Appointment Permanently?"}
+                  dialogDesBoldText={`${appointment?.doctorName} appointment`}
+                  functionName={handleDelete}
+                  functionParams={appointment?._id}
+                  deleteCancelBtnText={"Back"}
+                  deleteConfirmBtnText={"Cancel"}
+                  loadingValue={loading}
+                  loadingTimeText={"Canceling..."}
+                />
+              </div>
+            </div>
+
+            {/* Hover Glow */}
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-linear-to-r from-[#17a2b8]/10 to-[#0b0b3b]/10 rounded-3xl pointer-events-none" />
           </div>
         </motion.div>
       ))}

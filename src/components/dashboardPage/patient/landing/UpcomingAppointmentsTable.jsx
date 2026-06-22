@@ -1,7 +1,7 @@
 "use client";
 
 import DeleteAlertDialog from "@/components/shared/DeleteAlertDialog";
-import { deleteUpcomingAppointment } from "@/lib/actions/appointment";
+import { deleteAppointment } from "@/lib/actions/appointment";
 import { Table } from "@heroui/react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -14,7 +14,7 @@ const UpcomingAppointmentsTable = ({ upcomingAppointments }) => {
   const handleDelete = async (appointmentId) => {
     try {
       setLoading(true);
-      const res = await deleteUpcomingAppointment(appointmentId);
+      const res = await deleteAppointment(appointmentId);
 
       if (res?.deletedCount > 0) {
         toast.success("Appointment Cancel Successful");
@@ -46,7 +46,7 @@ const UpcomingAppointmentsTable = ({ upcomingAppointments }) => {
             {upcomingAppointments.map((appointment) => (
               <Table.Row key={appointment?._id}>
                 <Table.Cell className={"rounded-t-none rounded-bl-sm"}>
-                  <div className=" max-w-fit mx-auto flex gap-2 items-center ">
+                  <div className=" max-w-fit mx-auto flex flex-col md:flex-row gap-2 items-center text-center md:text-left">
                     <figure className="border border-[#17a2b8] rounded-full">
                       <Image
                         src={appointment?.doctorImage}
@@ -87,20 +87,22 @@ const UpcomingAppointmentsTable = ({ upcomingAppointments }) => {
 
                 {/* reusable delete alert dialog */}
                 <Table.Cell className={"rounded-t-none rounded-br-sm"}>
-                  <DeleteAlertDialog
-                    triggerBtnClass={
-                      "max-w-fit mx-auto px-0 h-auto bg-transparent text-red-500 font-bold"
-                    }
-                    triggerBtnText={"Cancel Appointment"}
-                    dialogHeading={"Cancel Appointment Permanently?"}
-                    dialogDesBoldText={`${appointment?.doctorName} appointment`}
-                    functionName={handleDelete}
-                    functionParams={appointment?._id}
-                    deleteCancelBtnText={"Back"}
-                    deleteConfirmBtnText={"Cancel"}
-                    loadingValue={loading}
-                    loadingTimeText={"Canceling..."}
-                  />
+                  <div className="max-w-fit mx-auto">
+                    <DeleteAlertDialog
+                      triggerBtnClass={
+                        "max-w-fit mx-auto px-0 h-auto bg-transparent text-red-500 font-bold"
+                      }
+                      triggerBtnText={"Cancel Appointment"}
+                      dialogHeading={"Cancel Appointment Permanently?"}
+                      dialogDesBoldText={`${appointment?.doctorName} appointment`}
+                      functionName={handleDelete}
+                      functionParams={appointment?._id}
+                      deleteCancelBtnText={"Back"}
+                      deleteConfirmBtnText={"Cancel"}
+                      loadingValue={loading}
+                      loadingTimeText={"Canceling..."}
+                    />
+                  </div>
                 </Table.Cell>
               </Table.Row>
             ))}

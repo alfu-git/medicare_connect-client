@@ -1,4 +1,4 @@
-import { fetchData } from "../server/server";
+import { fetchData, fetchDataSecurely } from "../server/server";
 
 export const getAllDoctors = async (page, searchValue, sortValue) => {
   if (!page) {
@@ -15,5 +15,5 @@ export const getDoctorById = async (doctorId) => {
 };
 
 export const getPatientFavDoctor = async (patientId) => {
-  return fetchData(`/favorite-doctors/${patientId}`);
+  return fetchDataSecurely(`/favorite-doctors/${patientId}`);
 };

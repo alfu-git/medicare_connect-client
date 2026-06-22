@@ -1,5 +1,9 @@
-import { fetchData } from "../server/server";
+import { fetchDataSecurely } from "../server/server";
 
 export const getAppointmentsByPatientId = async (patientId) => {
-  return await fetchData(`/appointments/${patientId}`);
+  return await fetchDataSecurely(`/appointments/${patientId}`);
+};
+
+export const getAppointmentByAppointmentId = async (appointmentId) => {
+  return await fetchDataSecurely(`/appointment/${appointmentId}`);
 };

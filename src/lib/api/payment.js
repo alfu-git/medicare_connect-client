@@ -1,5 +1,5 @@
-import { fetchData } from "../server/server";
+import { fetchDataSecurely } from "../server/server";
 
 export const getPaymentsByPatientId = async (patientId) => {
-  return fetchData(`/payments/${patientId}`);
+  return fetchDataSecurely(`/payments/${patientId}`);
 };
