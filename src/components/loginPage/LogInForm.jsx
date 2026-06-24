@@ -43,7 +43,7 @@ const LogInForm = () => {
       setLoading(false);
 
       if (error) {
-        toast.error(<h6 className="font-bold">{error.message}</h6>);
+        toast.error(<h6 className="font-bold">Something Went Wrong!</h6>);
       }
 
       if (data) {
