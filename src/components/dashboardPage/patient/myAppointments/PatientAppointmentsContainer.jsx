@@ -99,7 +99,7 @@ const PatientAppointmentsContainer = ({ appointments }) => {
                   Details
                 </Button>
               </Link>
-
+              
               <div className="flex gap-4">
                 <RescheduleModal appointment={appointment} />
 
