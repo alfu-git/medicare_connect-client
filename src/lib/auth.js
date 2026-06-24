@@ -29,6 +29,9 @@ export const auth = betterAuth({
       status: {
         defaultValue: "active",
       },
+      profileComplete: {
+        defaultValue: false,
+      },
     },
   },
   session: {

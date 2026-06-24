@@ -31,6 +31,7 @@ export const fetchDataSecurely = async (path) => {
 
 export const serverMutation = async (path, data, method) => {
   "use server";
+  console.log("data from server: ", data);
 
   const token = await getToken();
 
@@ -42,6 +43,8 @@ export const serverMutation = async (path, data, method) => {
     },
     body: JSON.stringify(data),
   });
+
+  console.log(res);
 
   return res.json();
 };

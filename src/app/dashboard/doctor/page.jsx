@@ -1,10 +1,15 @@
+import { getAllPatients } from "@/lib/api/patient";
+import { getUser } from "@/lib/helpers/get-user";
 import React from "react";
 
-const DoctorDashboardHomePage = () => {
+const DoctorDashboardHomePage = async () => {
+  const doctor = await getUser();
+  const patients = await getAllPatients(doctor?.id);
+  
   return (
-    <section className="my-20">
-      <div className="max-w-7xl mx-auto px-5">
-        <div>Doctor Dashboard Page</div>
+    <section className="my-10 px-5">
+      <div>
+        
       </div>
     </section>
   );
