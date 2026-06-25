@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { Lock, ArrowRight } from "lucide-react";
+import { Lock } from "lucide-react";
 
 const ProfileInCompleteState = ({ description, modal }) => {
   return (

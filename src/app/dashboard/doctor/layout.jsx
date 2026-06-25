@@ -1,12 +1,13 @@
 import DoctorProfileCompleteModal from "@/components/dashboardPage/doctor/doctorProfile/DoctorProfileCompleteModal";
 import ProfileInCompleteState from "@/components/shared/dashboard/ProfileInCompleteState";
 import { postDoctorData } from "@/lib/actions/doctor";
-import { getUser } from "@/lib/helpers/get-user";
+import { getUser, getUserFromDB } from "@/lib/helpers/get-user";
 import { requireRole } from "@/lib/helpers/require-role";
 
 const DoctorLayout = async ({ children }) => {
   const user = await getUser();
-  console.log(user);
+  const doctor = await getUserFromDB(user?.id);
+
   await requireRole("doctor");
 
   const postDoctorDataFunctionWrapper = async (doctorData) => {
@@ -14,7 +15,7 @@ const DoctorLayout = async ({ children }) => {
     return await postDoctorData(doctorData);
   };
 
-  if (!user?.profileComplete) {
+  if (!doctor?.profileComplete) {
     return (
       <ProfileInCompleteState
         description={

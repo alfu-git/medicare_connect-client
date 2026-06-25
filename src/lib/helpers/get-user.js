@@ -12,5 +12,12 @@ export const getUser = async () => {
 
 export const getUserFromDB = async () => {
   const user = await getUser();
-  return await fetchData(`/user/${user?.id}`);
+
+  if (!user) {
+    return null;
+  }
+
+  return await fetchData(`/user/${user?.id}`, {
+    cache: "no-store",
+  });
 };
