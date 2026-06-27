@@ -71,9 +71,9 @@ const DoctorDashboardHomeStats = ({
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  className={`text-3xl font-bold mt-2 color-secondary ${stat.title === "Total Payments" && "flex items-center"}`}
+                  className={`text-3xl font-bold mt-2 color-secondary ${stat.title === "Total Revenue" && "flex items-center"}`}
                 >
-                  {stat.title === "Total Payments" && (
+                  {stat.title === "Total Revenue" && (
                     <TbCurrencyTaka className="-ml-1.5" />
                   )}
                   <CountUpValue value={stat.value} duration={2} />

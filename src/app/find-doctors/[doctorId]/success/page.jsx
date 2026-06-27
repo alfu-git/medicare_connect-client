@@ -35,6 +35,8 @@ export default async function Success({ searchParams }) {
       // Save the appointment now that payment is confirmed
       await postAppointmentData({
         patientId: metadata.patientId,
+        patientName: metadata.patientName,
+        patientImage: metadata.patientImage,
         doctorId: metadata.doctorId,
         doctorName: metadata.doctorName,
         doctorImage: metadata.doctorImage,

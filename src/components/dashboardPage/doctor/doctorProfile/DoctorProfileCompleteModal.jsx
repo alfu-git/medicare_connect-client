@@ -55,14 +55,14 @@ const days = [
 ];
 
 const timeSlots = [
-  { id: "09:00", value: "09:00 AM" },
-  { id: "10:00", value: "10:00 AM" },
-  { id: "11:00", value: "11:00 AM" },
-  { id: "12:00", value: "12:00 PM" },
-  { id: "02:00", value: "02:00 PM" },
-  { id: "03:00", value: "03:00 PM" },
-  { id: "04:00", value: "04:00 PM" },
-  { id: "05:00", value: "05:00 PM" },
+  { id: "09:00 AM", value: "09:00 AM" },
+  { id: "10:00 AM", value: "10:00 AM" },
+  { id: "11:00 AM", value: "11:00 AM" },
+  { id: "12:00 PM", value: "12:00 PM" },
+  { id: "02:00 PM", value: "02:00 PM" },
+  { id: "03:00 PM", value: "03:00 PM" },
+  { id: "04:00 PM", value: "04:00 PM" },
+  { id: "05:00 PM", value: "05:00 PM" },
 ];
 
 const DoctorProfileCompleteModal = ({

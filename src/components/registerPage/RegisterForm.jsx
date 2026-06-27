@@ -62,7 +62,7 @@ const RegisterForm = () => {
       setLoading(false);
 
       if (error) {
-        toast.error(<p className="font-bold">{error.message}</p>);
+        toast.error(<p className="font-bold">Something Went Wrong!</p>);
       }
 
       if (data) {

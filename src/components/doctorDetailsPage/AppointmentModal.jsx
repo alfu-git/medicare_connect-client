@@ -29,15 +29,21 @@ const AppointmentModal = ({ doctor }) => {
 
   return (
     <Modal>
-      <Button
-        type="submit"
-        disabled={doctor?.verificationStatus !== "verified"}
-        className={`w-full py-6 text-lg bg-[#0b0b3b] hover:bg-primary rounded-xl transition-all duration-300`}
-      >
-        {doctor?.verificationStatus === "suspended"
-          ? "Unavailable"
-          : "Book Appointment"}
-      </Button>
+      {user?.role === "patient" ? (
+        <Button
+          type="submit"
+          disabled={doctor?.verificationStatus !== "verified"}
+          className={`w-full py-6 text-lg bg-[#0b0b3b] hover:bg-primary rounded-xl transition-all duration-300`}
+        >
+          {doctor?.verificationStatus === "suspended"
+            ? "Unavailable"
+            : "Book Appointment"}
+        </Button>
+      ) : (
+        <p className="px-3 py-1 bg-[#F6F6F6]/80 color-muted text-lg font-bold text-center">
+          To Get Care Your Role Must Be Patient
+        </p>
+      )}
 
       <Modal.Backdrop>
         <Modal.Container placement="auto">
