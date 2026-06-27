@@ -18,9 +18,16 @@ const DeleteAlertDialog = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const handleDeleteConfirm = () => {
-    if (functionName) {
-      functionParams ? functionName(functionParams) : functionName();
+    if (!functionName) return;
+
+    if (functionParams === undefined) {
+      functionName();
+    } else if (Array.isArray(functionParams)) {
+      functionName(...functionParams);
+    } else {
+      functionName(functionParams);
     }
+
     setIsOpen(false);
   };
 

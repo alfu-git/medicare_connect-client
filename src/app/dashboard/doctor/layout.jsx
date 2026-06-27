@@ -1,5 +1,5 @@
 import DoctorProfileCompleteModal from "@/components/dashboardPage/doctor/doctorProfile/DoctorProfileCompleteModal";
-import ProfileInCompleteState from "@/components/shared/dashboard/ProfileInCompleteState";
+import ProfileInCompleteState from "@/components/dashboardPage/shared/ProfileInCompleteState";
 import { postDoctorData } from "@/lib/actions/doctor";
 import { getUser, getUserFromDB } from "@/lib/helpers/get-user";
 import { requireRole } from "@/lib/helpers/require-role";

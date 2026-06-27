@@ -33,3 +33,17 @@ export const updateAppointment = async (appointmentId, updatedAppointment) => {
 
   return res;
 };
+
+export const rejectAppointment = async (appointmentId, statusData) => {
+  const res = await serverMutation(
+    `/doctor-appointment/${appointmentId}`,
+    statusData,
+    "PATCH",
+  );
+
+  if (res?.modifiedCount > 0) {
+    revalidatePath("/dashboard/doctor/appointment-requests");
+  }
+
+  return res;
+};

@@ -128,6 +128,7 @@ const AppointmentModal = ({ doctor }) => {
                   {/* symptoms */}
                   <div className="flex w-full flex-col gap-2">
                     <Label>Symptoms</Label>
+                    
                     <TextArea
                       aria-describedby="textarea-controlled-description"
                       aria-label="Announcement"

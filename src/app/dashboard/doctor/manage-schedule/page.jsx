@@ -4,6 +4,12 @@ import { addNewSchedule, deleteSchedule } from "@/lib/actions/schedule";
 import { getUserDoctorIdentity } from "@/lib/helpers/get-doctor-identity";
 import React from "react";
 
+export const metadata = {
+  title: "Manage Doctor Schedule | MediCare Connect",
+  description:
+    "Easily manage your availability, appointments, and working hours with MediCare Connect. Doctors can add, update, or remove schedules to provide better patient care and streamline booking.",
+};
+
 const DoctorManageSchedulePage = async () => {
   const doctor = await getUserDoctorIdentity();
 
