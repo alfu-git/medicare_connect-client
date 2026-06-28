@@ -17,7 +17,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const PatientProfileCompleteModal = ({ updatePatientProfileWrapper }) => {
+const PatientProfileCompleteModal = ({ completePatientProfileWrapper }) => {
   const [ageValue, setAgeValue] = useState("");
   const [numberValue, setNumberValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -39,7 +39,7 @@ const PatientProfileCompleteModal = ({ updatePatientProfileWrapper }) => {
     try {
       setLoading(true);
 
-      const res = await updatePatientProfileWrapper(userData);
+      const res = await completePatientProfileWrapper(userData);
 
       if (res?.modifiedCount > 0) {
         toast.success(

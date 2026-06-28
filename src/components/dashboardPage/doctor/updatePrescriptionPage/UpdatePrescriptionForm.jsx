@@ -2,57 +2,64 @@
 
 import { Button, Form, TextArea } from "@heroui/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
-  const [diagnosisValue, setDiagnosisValue] = useState("");
-  const [medicinesValue, setMedicinesValue] = useState("");
-  const [adviceValue, setAdviceValue] = useState("");
+const UpdatePrescriptionForm = ({
+  prescription,
+  updatePrescriptionWrapper,
+}) => {
+  const [diagnosisValue, setDiagnosisValue] = useState(
+    prescription?.diagnosis || "",
+  );
+  const [medicinesValue, setMedicinesValue] = useState(
+    prescription?.medicines || "",
+  );
+  const [adviceValue, setAdviceValue] = useState(prescription?.advice || "");
   const [loading, setLoading] = useState(false);
 
-  const hasOneInput = diagnosisValue || medicinesValue || adviceValue;
-  const isComplete = diagnosisValue && medicinesValue && adviceValue;
+  const initialValues = React.useMemo(
+    () => ({
+      diagnosis: prescription?.diagnosis || "",
+      medicines: prescription?.medicines || "",
+      advice: prescription?.advice || "",
+    }),
+    [prescription],
+  );
 
-  const handleOnSubmit = async (e) => {
+  const isChanged =
+    diagnosisValue !== initialValues.diagnosis ||
+    medicinesValue !== initialValues.medicines ||
+    adviceValue !== initialValues.advice;
+
+  const isAnyFieldEmpty =
+    !diagnosisValue.trim() || !medicinesValue.trim() || !adviceValue.trim();
+
+  const router = useRouter();
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const prescriptionData = {
-      patientId: appointment?.patientId,
-      patientName: appointment?.patientName,
-      patientAge: appointment?.patientAge || "",
-      patientGender: appointment?.patientGender || "",
-      patientNumber: appointment?.patientNumber || "",
-      doctorId: appointment?.doctorId,
-      doctorName: appointment?.doctorName,
-      doctorSpecialization: appointment?.doctorSpecialization,
-      appointmentId: appointment?._id,
-      appointmentDay: appointment?.appointmentDay,
-      appointmentTime: appointment?.appointmentTime,
-      symptoms: appointment?.symptoms,
-      diagnosis: diagnosisValue,
-      medicines: medicinesValue,
-      advice: adviceValue,
+    const updatedPrescription = {
+      diagnosis: diagnosisValue || prescription?.diagnosis,
+      medicines: medicinesValue || prescription?.medicines,
+      advice: adviceValue || prescription?.advice,
     };
 
     try {
       setLoading(true);
 
-      const res = await postPrescriptionWrapper(prescriptionData);
+      const res = await updatePrescriptionWrapper(updatedPrescription);
 
-      console.log(res);
-
-      if (res?.insertedId) {
-        toast.success("Prescription has been completed and saved");
+      if (res?.modifiedCount > 0) {
+        toast.success("Prescription Update Successful");
+        setLoading(false);
+        router.push("/dashboard/doctor/prescription-management");
       }
     } catch (err) {
       console.log(err);
       toast.error("Something Went Wrong!");
-    } finally {
-      setLoading(false);
-      setDiagnosisValue("");
-      setMedicinesValue("");
-      setAdviceValue("");
     }
   };
 
@@ -84,9 +91,11 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
           </div>
 
           <div className="text-right">
-            <h2 className="font-semibold text-lg">{appointment?.doctorName}</h2>
+            <h2 className="font-semibold text-lg">
+              {prescription?.doctorName}
+            </h2>
             <p className="text-sm text-gray-500">
-              {appointment?.doctorSpecialization}
+              {prescription?.doctorSpecialization}
             </p>
           </div>
         </div>
@@ -96,39 +105,39 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
           <div className="mb-6 flex flex-wrap sm:flex-nowrap gap-3 items-center sm:justify-between">
             <p>
               <span className="font-semibold">Patient:</span>{" "}
-              {appointment?.patientName}
+              {prescription?.patientName}
             </p>
 
             <p>
               <span className="font-semibold">Gender:</span>{" "}
-              {appointment?.patientGender}
+              {prescription?.patientGender}
             </p>
 
             <p>
               <span className="font-semibold">Age:</span>{" "}
-              {appointment?.patientAge}
+              {prescription?.patientAge}
             </p>
 
             <p>
               <span className="font-semibold">Number:</span>{" "}
-              {appointment?.patientNumber}
+              {prescription?.patientNumber}
             </p>
           </div>
 
           <div className="flex flex-wrap sm:flex-nowrap gap-3 items-center sm:justify-between">
             <p>
               <span className="font-semibold">Day:</span>{" "}
-              {appointment?.appointmentDay}
+              {prescription?.appointmentDay}
             </p>
 
             <p>
               <span className="font-semibold">Time:</span>{" "}
-              {appointment?.appointmentTime}
+              {prescription?.appointmentTime}
             </p>
 
             <p>
               <span className="font-semibold">Date:</span>{" "}
-              {new Date(appointment?.createdAt).toLocaleDateString()}
+              {new Date(prescription?.createdAt).toLocaleDateString()}
             </p>
           </div>
         </div>
@@ -138,11 +147,11 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
           <h3 className="font-semibold text-gray-700 mb-2">Symptoms</h3>
 
           <p className="text-gray-600 border p-3 rounded-lg bg-gray-50">
-            {appointment?.symptoms}
+            {prescription?.symptoms}
           </p>
         </div>
 
-        <Form onSubmit={handleOnSubmit}>
+        <Form onSubmit={handleFormSubmit}>
           {/* 🧠 Diagnosis */}
           <div className="mb-6">
             <h3 className="font-semibold text-gray-700 mb-2">Diagnosis</h3>
@@ -198,11 +207,11 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
           <div className="flex gap-4 items-center justify-end">
             <Button
               onClick={() => {
-                setDiagnosisValue("");
-                setMedicinesValue("");
-                setAdviceValue("");
+                setDiagnosisValue(initialValues.diagnosis);
+                setMedicinesValue(initialValues.medicines);
+                setAdviceValue(initialValues.advice);
               }}
-              isDisabled={!hasOneInput}
+              isDisabled={!isChanged}
               variant="danger-soft"
               className={"border border-red-500/30 rounded-md"}
             >
@@ -211,10 +220,10 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
 
             <Button
               type="submit"
-              isDisabled={!isComplete || loading}
+              isDisabled={!isChanged || isAnyFieldEmpty || loading}
               className={"bg-[#0b0b3b] hover:bg-[#0b0b3b]/95 rounded-md"}
             >
-              {loading ? "Completing..." : "Complete"}
+              {loading ? "Please Wait..." : "Update"}
             </Button>
           </div>
         </Form>
@@ -226,7 +235,7 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
           </p>
 
           <div className="text-right">
-            <p className="font-semibold">{appointment?.doctorName}</p>
+            <p className="font-semibold">{prescription?.doctorName}</p>
 
             <p className="text-sm text-gray-500">Signature</p>
           </div>
@@ -236,4 +245,4 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
   );
 };
 
-export default DoctorPrescriptionForm;
+export default UpdatePrescriptionForm;

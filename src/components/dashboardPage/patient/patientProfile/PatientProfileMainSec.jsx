@@ -1,13 +1,12 @@
-import { Button } from "@heroui/react";
 import Image from "next/image";
 import React from "react";
-import { AiOutlineEdit } from "react-icons/ai";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuUser } from "react-icons/lu";
 import { MdOutlineDateRange } from "react-icons/md";
+import { FiPhone } from "react-icons/fi";
 import PatientProfileUpdateModal from "./PatientProfileUpdateModal";
 
-const PatientProfileMainSec = ({ user }) => {
+const PatientProfileMainSec = ({ user, updatePatientProfileWrapper }) => {
   return (
     <div className="w-full bg-white/70 backdrop-blur-xl border border-white/40 shadow-xl rounded-3xl p-6 flex flex-col-reverse md:flex-row justify-between gap-4 hover:shadow-2xl transition-all duration-300">
       {/* LEFT SECTION */}
@@ -29,22 +28,51 @@ const PatientProfileMainSec = ({ user }) => {
 
         {/* INFO */}
         <div className="space-y-3">
-          {/* NAME */}
-          <h3 className="text-2xl font-bold tracking-wide text-[#0c2f25]">
-            {user?.name}
-          </h3>
+          {/* NAME & BADGES */}
+          <div className="space-y-2">
+            <h3 className="text-2xl font-bold tracking-wide text-[#0c2f25]">
+              {user?.name}
+            </h3>
+
+            {/* Age & Gender Premium Badges */}
+            <div className="flex flex-wrap gap-2">
+              {user?.gender && (
+                <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#17a2b8]/10 text-[#17a2b8] border border-[#17a2b8]/20">
+                  {user?.gender}
+                </span>
+              )}
+              {user?.age && (
+                <span className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-[#0c2f25]/10 text-[#0c2f25] border border-[#0c2f25]/20">
+                  {user?.age} Years Old
+                </span>
+              )}
+            </div>
+          </div>
 
           {/* ID */}
           <div className="flex items-center gap-2 text-sm text-[#6d8276]">
             <LuUser className="text-[#17a2b8]" />
             <p className="font-medium">
               PATIENT ID:
-              <span className="ml-1 color-primary font-bold">{user?.id}</span>
+              <span className="ml-1 color-primary font-bold">
+                {user?.id || user?._id}
+              </span>
             </p>
           </div>
 
           {/* META INFO */}
-          <div className="flex flex-col gap-1 text-sm text-[#6d8276]">
+          <div className="flex flex-col gap-1.5 text-sm text-[#6d8276]">
+            {/* Phone Number */}
+            {user?.number && (
+              <div className="flex items-center gap-2">
+                <FiPhone className="text-[#17a2b8]" />
+                <span className="font-medium text-[#0b0b3b]">
+                  {user?.number}
+                </span>
+              </div>
+            )}
+
+            {/* Registration Date */}
             <div className="flex items-center gap-2">
               <MdOutlineDateRange className="text-[#17a2b8]" />
               <span>
@@ -59,6 +87,7 @@ const PatientProfileMainSec = ({ user }) => {
               </span>
             </div>
 
+            {/* Location */}
             {user?.location && (
               <div className="flex items-center gap-2">
                 <IoLocationOutline className="text-[#17a2b8]" />
@@ -73,7 +102,10 @@ const PatientProfileMainSec = ({ user }) => {
 
       {/* RIGHT CTA */}
       <div className="max-w-fit ml-auto">
-        <PatientProfileUpdateModal user={user} />
+        <PatientProfileUpdateModal
+          user={user}
+          updatePatientProfileWrapper={updatePatientProfileWrapper}
+        />
       </div>
     </div>
   );

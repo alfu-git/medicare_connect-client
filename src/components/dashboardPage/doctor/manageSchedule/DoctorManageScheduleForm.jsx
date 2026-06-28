@@ -112,7 +112,6 @@ const DoctorManageScheduleForm = ({
       setLoading(true);
 
       const res = await deleteScheduleWrapper(deletedSchedule);
-      console.log(res);
 
       if (res?.modifiedCount > 0) {
         toast.success(`Schedule Delete Successful`);
@@ -250,8 +249,8 @@ const DoctorManageScheduleForm = ({
 
               <Select.Popover>
                 <ListBox selectionMode="multiple">
-                  {doctor?.availableDays.map((day, index) => (
-                    <ListBox.Item key={index} id={day} textValue={day}>
+                  {doctor?.availableDays.map((day) => (
+                    <ListBox.Item key={day} id={day} textValue={day}>
                       {day}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>
@@ -274,8 +273,8 @@ const DoctorManageScheduleForm = ({
 
               <Select.Popover>
                 <ListBox selectionMode="multiple">
-                  {doctor?.availableSlots.map((slot, index) => (
-                    <ListBox.Item key={index} id={slot} textValue={slot}>
+                  {doctor?.availableSlots.map((slot) => (
+                    <ListBox.Item key={slot} id={slot} textValue={slot}>
                       {slot}
                       <ListBox.ItemIndicator />
                     </ListBox.Item>

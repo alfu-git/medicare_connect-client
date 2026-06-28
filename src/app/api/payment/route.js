@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { stripe } from "@/lib/stripe";
-import { getUser } from "@/lib/helpers/get-user";
+import { getUserFromDB } from "@/lib/helpers/get-user";
 
 export async function POST(request) {
   try {
     const headersList = await headers();
     const origin = headersList.get("origin");
 
-    const user = await getUser();
+    const user = await getUserFromDB();
 
     const formData = await request.formData();
     const doctorId = formData.get("doctorId");
@@ -39,6 +39,9 @@ export async function POST(request) {
         patientId: patientId || user?.id,
         patientName: user?.name,
         patientImage: user?.image,
+        patientAge: user?.age,
+        patientGender: user?.gender,
+        patientNumber: user?.number,
         doctorId,
         doctorName,
         doctorImage,

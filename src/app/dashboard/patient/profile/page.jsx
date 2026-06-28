@@ -1,6 +1,7 @@
 import PatientProfileMainSec from "@/components/dashboardPage/patient/patientProfile/PatientProfileMainSec";
 import PatientProfilePageHeading from "@/components/dashboardPage/patient/patientProfile/PatientProfilePageHeading";
-import { getUser } from "@/lib/helpers/get-user";
+import { updatePatientProfile } from "@/lib/actions/patient";
+import { getUser, getUserFromDB } from "@/lib/helpers/get-user";
 import React from "react";
 
 export async function generateMetadata({ params }) {
@@ -14,13 +15,21 @@ export async function generateMetadata({ params }) {
 }
 
 const PatientProfilePage = async () => {
-  const user = await getUser();
+  const user = await getUserFromDB();
+
+  const updatePatientProfileWrapper = async (updatedData) => {
+    "use server";
+    return await updatePatientProfile(user?._id, updatedData);
+  };
 
   return (
     <section className="my-10 px-5">
       <div>
         <PatientProfilePageHeading />
-        <PatientProfileMainSec user={user} />
+        <PatientProfileMainSec
+          user={user}
+          updatePatientProfileWrapper={updatePatientProfileWrapper}
+        />
       </div>
     </section>
   );

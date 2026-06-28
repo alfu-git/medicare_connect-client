@@ -5,7 +5,20 @@ export const postPrescription = async (data) => {
   const res = await serverMutation("/doctor-prescriptions", data, "POST");
 
   if (res?.insertedId) {
-    revalidatePath("/dashboard/doctor/appointment-requests");
+    revalidatePath("/dashboard/doctor");
+  }
+
+  return res;
+};
+
+export const updatePrescription = async (prescriptionId, updatedData) => {
+  const res = await serverMutation(
+    `/update-doctor-prescription/${prescriptionId}`,
+    updatedData,
+    "PATCH",
+  );
+
+  if (res?.modifiedCount > 0) {
     revalidatePath("/dashboard/doctor/prescription-management");
   }
 
