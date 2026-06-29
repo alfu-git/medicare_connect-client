@@ -58,14 +58,27 @@ const Navbar = ({ userFromDB }) => {
       </li>
 
       {user?.email && (
-        <li>
-          <Link
-            href={`/dashboard/${userFromDB?.role}`}
-            className={`text-sm ${pathname === `/dashboard/${user?.role}` ? "color-primary font-semibold" : "color-tertiary"}`}
-          >
-            Dashboard
-          </Link>
-        </li>
+        <>
+          <li>
+            <Link
+              href={`/dashboard/${userFromDB?.role}`}
+              className={`text-sm ${pathname === `/dashboard/${user?.role}` ? "color-primary font-semibold" : "color-tertiary"}`}
+            >
+              Dashboard
+            </Link>
+          </li>
+
+          {user?.role !== "admin" && (
+            <li>
+              <Link
+                href={`/dashboard/${userFromDB?.role}/profile`}
+                className={`text-sm ${pathname === `/dashboard/${user?.role}/profile` ? "color-primary font-semibold" : "color-tertiary"}`}
+              >
+                Profile
+              </Link>
+            </li>
+          )}
+        </>
       )}
     </>
   );

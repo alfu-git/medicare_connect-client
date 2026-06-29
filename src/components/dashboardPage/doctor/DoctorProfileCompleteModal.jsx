@@ -109,6 +109,8 @@ const DoctorProfileCompleteModal = ({
       availableDays: availableDaysValue || [],
       availableSlots: availableTimeValue || [],
       verificationStatus: "unverified",
+      totalReviews: 0,
+      avgRating: 0,
     };
 
     try {

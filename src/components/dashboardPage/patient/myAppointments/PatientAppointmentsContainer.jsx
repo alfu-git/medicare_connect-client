@@ -10,8 +10,9 @@ import { deleteAppointment } from "@/lib/actions/appointment";
 import RescheduleModal from "./RescheduleModal";
 import Link from "next/link";
 import EmptyStateForPatientAppointments from "./EmptyStateForPatientAppointments";
+import GiveReviewModal from "../GiveReviewModal";
 
-const PatientAppointmentsContainer = ({ appointments }) => {
+const PatientAppointmentsContainer = ({ appointments, postReviewWrapper }) => {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("pending"); // ✅ added
 
@@ -160,14 +161,24 @@ const PatientAppointmentsContainer = ({ appointments }) => {
                       </div>
                     </div>
                   ) : appointment?.appointmentStatus === "completed" ? (
-                    <div className="mt-5 pt-4 border-t">
+                    <div className="mt-5 pt-4 border-t flex justify-between gap-2 items-center">
                       <Link
                         href={`/dashboard/patient/my-appointments/view-prescription/${appointment?._id}`}
+                        className="block w-full"
                       >
                         <Button className="w-full bg-primary rounded-md text-base">
                           View Prescription
                         </Button>
                       </Link>
+
+                      {appointment?.review === "completed" ? (
+                        <></>
+                      ) : (
+                        <GiveReviewModal
+                          appointment={appointment}
+                          postReviewWrapper={postReviewWrapper}
+                        />
+                      )}
                     </div>
                   ) : (
                     <p className="mt-5 pt-4 border-t text-center text-red-500">

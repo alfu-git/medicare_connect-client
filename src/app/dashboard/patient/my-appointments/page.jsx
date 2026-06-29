@@ -1,6 +1,7 @@
 import PatientAppointmentsContainer from "@/components/dashboardPage/patient/myAppointments/PatientAppointmentsContainer";
 import PatientAppointmentsPageEmptyState from "@/components/dashboardPage/patient/myAppointments/PatientAppointmentsPageEmptyState";
 import PatientAppointmentsPageHeading from "@/components/dashboardPage/patient/myAppointments/PatientAppointmentsPageHeading";
+import { postReview } from "@/lib/actions/review";
 import { getAppointmentsByPatientId } from "@/lib/api/appointment";
 import { getUser } from "@/lib/helpers/get-user";
 import React from "react";
@@ -19,6 +20,11 @@ const PatientAppointmentsPage = async () => {
 
   const appointments = await getAppointmentsByPatientId(user?.id);
 
+  const postReviewWrapper = async (reviewData) => {
+    "use server";
+    return await postReview(reviewData);
+  };
+
   return (
     <section className="mt-10 mb-20 px-5">
       <div>
@@ -27,7 +33,10 @@ const PatientAppointmentsPage = async () => {
             {/* heading */}
             <PatientAppointmentsPageHeading />
             {/* patient all appointments container */}
-            <PatientAppointmentsContainer appointments={appointments} />
+            <PatientAppointmentsContainer
+              appointments={appointments}
+              postReviewWrapper={postReviewWrapper}
+            />
           </>
         ) : (
           <PatientAppointmentsPageEmptyState />

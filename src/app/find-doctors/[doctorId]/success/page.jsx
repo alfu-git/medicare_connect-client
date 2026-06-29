@@ -50,6 +50,7 @@ export default async function Success({ searchParams }) {
         appointmentStatus: "pending",
         paymentStatus: "paid",
         paymentId,
+        review: "pending",
       });
     } catch (err) {
       console.log(err);
