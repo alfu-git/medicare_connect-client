@@ -4,6 +4,12 @@ import { updateDoctorStatus } from "@/lib/actions/doctor";
 import { getTotalDoctors } from "@/lib/api/doctor";
 import React from "react";
 
+export const metadata = {
+  title: "Doctor Management System | Admin Panel | MediCare Connect",
+  description:
+    "Easily manage doctor accounts, monitor availability, and control status updates from the MediCare Connect admin panel. Streamline healthcare operations with a powerful doctor management system.",
+};
+
 const AdminManageDoctorsPage = async () => {
   const totalDoctors = await getTotalDoctors();
 
