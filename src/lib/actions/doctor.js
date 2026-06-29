@@ -24,3 +24,17 @@ export const updateDoctorProfile = async (doctorId, updatedData) => {
 
   return res;
 };
+
+export const updateDoctorStatus = async (doctorId, updatedStatus) => {
+  const res = await serverMutation(
+    `/update-doctor-status/${doctorId}`,
+    updatedStatus,
+    "PATCH",
+  );
+
+  if (res?.modifiedCount > 0) {
+    revalidatePath("/dashboard/admin/manage-doctors");
+  }
+
+  return res;
+};

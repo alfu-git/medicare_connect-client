@@ -108,7 +108,7 @@ const DoctorProfileCompleteModal = ({
       hospitalName: hospitalNameValue || "",
       availableDays: availableDaysValue || [],
       availableSlots: availableTimeValue || [],
-      verificationStatus: "pending",
+      verificationStatus: "unverified",
     };
 
     try {
