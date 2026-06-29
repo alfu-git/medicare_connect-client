@@ -20,7 +20,7 @@ const DoctorDetailsCard = ({ doctor }) => {
       className="relative z-0 max-w-5xl mx-auto bg-white backdrop-blur-xl rounded-3xl shadow-2xl p-6 md:p-10 grid lg:grid-cols-3 gap-8"
     >
       {/* pending state overlay */}
-      {doctor?.verificationStatus === "pending" && (
+      {doctor?.verificationStatus === "unverified" && (
         <div className="absolute z-50 inset-0 bg-white/60 backdrop-blur-sm flex flex-col items-center justify-center rounded-3xl">
           <FaRegDotCircle className="text-3xl text-yellow-500 mb-2" />
 
@@ -36,10 +36,10 @@ const DoctorDetailsCard = ({ doctor }) => {
       )}
 
       {/* suspend state overlay */}
-      {doctor?.verificationStatus === "suspended" && (
+      {doctor?.verificationStatus === "rejected" && (
         <div className="absolute z-50 inset-0 bg-white/60 backdrop-blur-sm flex flex-col items-center justify-center rounded-3xl text-center">
           <MdBlock className="text-4xl text-red-600 mb-2" />
-          <p className="text-xl font-semibold text-red-600">Doctor Suspended</p>
+          <p className="text-xl font-semibold text-red-600">Doctor rejected</p>
           <p className="text-sm text-gray-600 mt-1">
             This doctor is currently unavailable for appointments
           </p>
@@ -58,9 +58,9 @@ const DoctorDetailsCard = ({ doctor }) => {
 
         {/* Verification */}
         <div
-          className={`mt-4 px-2 py-0.5 text-sm rounded-full flex items-center gap-1.5 border ${doctor?.verificationStatus === "pending" ? "text-yellow-500 bg-yellow-500/20 border-yellow-500/80" : doctor?.verificationStatus === "verified" ? "text-green-500 bg-green-500/20 border-green-500/80" : "text-red-500 bg-red-500/20 border-red-500/80"}`}
+          className={`mt-4 px-2 py-0.5 text-sm rounded-full flex items-center gap-1.5 border ${doctor?.verificationStatus === "unverified" ? "text-yellow-500 bg-yellow-500/20 border-yellow-500/80" : doctor?.verificationStatus === "verified" ? "text-green-500 bg-green-500/20 border-green-500/80" : "text-red-500 bg-red-500/20 border-red-500/80"}`}
         >
-          {doctor?.verificationStatus === "pending" ? (
+          {doctor?.verificationStatus === "unverified" ? (
             <FaRegDotCircle />
           ) : doctor?.verificationStatus === "verified" ? (
             <FaCheckCircle />
