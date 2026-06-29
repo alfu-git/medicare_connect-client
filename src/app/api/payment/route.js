@@ -36,7 +36,7 @@ export async function POST(request) {
         },
       ],
       metadata: {
-        patientId: patientId || user?.id,
+        patientId: patientId || user?._id,
         patientName: user?.name,
         patientImage: user?.image,
         patientAge: user?.age,

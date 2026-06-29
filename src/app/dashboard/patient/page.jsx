@@ -21,6 +21,7 @@ const PatientDashboardHomePage = async () => {
   const user = await getUser();
 
   const appointments = (await getAppointmentsByPatientId(user?.id)) || [];
+  console.log(appointments);
 
   const upcomingAppointments = appointments.filter(
     (appointment) => appointment?.appointmentStatus === "pending",

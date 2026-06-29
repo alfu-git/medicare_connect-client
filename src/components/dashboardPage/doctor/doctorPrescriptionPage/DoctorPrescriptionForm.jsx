@@ -2,6 +2,7 @@
 
 import { Button, Form, TextArea } from "@heroui/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -13,6 +14,8 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
 
   const hasOneInput = diagnosisValue || medicinesValue || adviceValue;
   const isComplete = diagnosisValue && medicinesValue && adviceValue;
+
+  const router = useRouter();
 
   const handleOnSubmit = async (e) => {
     e.preventDefault();
@@ -40,8 +43,6 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
 
       const res = await postPrescriptionWrapper(prescriptionData);
 
-      console.log(res);
-
       if (res?.insertedId) {
         toast.success("Prescription has been completed and saved");
       }
@@ -53,6 +54,8 @@ const DoctorPrescriptionForm = ({ appointment, postPrescriptionWrapper }) => {
       setDiagnosisValue("");
       setMedicinesValue("");
       setAdviceValue("");
+
+      router.push("/dashboard/doctor/prescription-management");
     }
   };
 

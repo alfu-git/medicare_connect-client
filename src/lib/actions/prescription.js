@@ -5,7 +5,7 @@ export const postPrescription = async (data) => {
   const res = await serverMutation("/doctor-prescriptions", data, "POST");
 
   if (res?.insertedId) {
-    revalidatePath("/dashboard/doctor");
+    revalidatePath("/dashboard/doctor/prescription-management");
   }
 
   return res;

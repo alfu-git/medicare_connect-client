@@ -12,11 +12,9 @@ import {
 } from "@heroui/react";
 import { FaHandHoldingMedical } from "react-icons/fa";
 import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 
-const AppointmentModal = ({ doctor }) => {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
-
+const AppointmentModal = ({ doctor, user }) => {
   const [appointmentDayValue, setAppointmentDayValue] = useState("");
   const [appointmentTimeValue, setAppointmentTimeValue] = useState("");
   const [symptomsValue, setSymptomsValue] = useState("");
@@ -30,15 +28,31 @@ const AppointmentModal = ({ doctor }) => {
   return (
     <Modal>
       {user?.role === "patient" ? (
-        <Button
-          type="submit"
-          disabled={doctor?.verificationStatus !== "verified"}
-          className={`w-full py-6 text-lg bg-[#0b0b3b] hover:bg-primary rounded-xl transition-all duration-300`}
-        >
-          {doctor?.verificationStatus === "suspended"
-            ? "Unavailable"
-            : "Book Appointment"}
-        </Button>
+        user?.profileComplete ? (
+          <Button
+            type="submit"
+            disabled={doctor?.verificationStatus !== "verified"}
+            className={`w-full py-6 text-lg bg-[#0b0b3b] hover:bg-primary rounded-xl transition-all duration-300`}
+          >
+            {doctor?.verificationStatus === "suspended"
+              ? "Unavailable"
+              : "Book Appointment"}
+          </Button>
+        ) : (
+          <div className="px-3 py-1 bg-[#F6F6F6]/80 color-muted font-bold text-center flex flex-col items-center">
+            <p className="text-lg">
+              To Get Booking System You Must Be Complete Your Profile.
+            </p>
+
+            <Link href={"/dashboard/patient"}>
+              <button
+                className={"mb-2 px-0 h-auto bg-transparent color-primary"}
+              >
+                Go For Complete Profile
+              </button>
+            </Link>
+          </div>
+        )
       ) : (
         <p className="px-3 py-1 bg-[#F6F6F6]/80 color-muted text-lg font-bold text-center">
           To Get Care Your Role Must Be Patient
@@ -128,7 +142,7 @@ const AppointmentModal = ({ doctor }) => {
                   {/* symptoms */}
                   <div className="flex w-full flex-col gap-2">
                     <Label>Symptoms</Label>
-                    
+
                     <TextArea
                       aria-describedby="textarea-controlled-description"
                       aria-label="Announcement"

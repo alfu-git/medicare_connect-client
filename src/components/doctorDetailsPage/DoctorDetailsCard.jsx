@@ -10,7 +10,7 @@ import { LuHospital } from "react-icons/lu";
 import { HiOutlineCurrencyBangladeshi } from "react-icons/hi";
 import AppointmentModal from "./AppointmentModal";
 
-const DoctorDetailsCard = ({ doctor }) => {
+const DoctorDetailsCard = ({ doctor, user }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 60 }}
@@ -143,7 +143,7 @@ const DoctorDetailsCard = ({ doctor }) => {
 
         {/* CTA BUTTON */}
         <div className="mt-8">
-          <AppointmentModal doctor={doctor} />
+          <AppointmentModal doctor={doctor} user={user} />
         </div>
       </div>
     </motion.div>
