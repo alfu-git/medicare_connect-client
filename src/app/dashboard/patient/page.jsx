@@ -20,7 +20,8 @@ export async function generateMetadata({ params }) {
 const PatientDashboardHomePage = async () => {
   const user = await getUser();
 
-  const appointments = await getAppointmentsByPatientId(user?.id);
+  const appointments = (await getAppointmentsByPatientId(user?.id)) || [];
+
   const upcomingAppointments = appointments.filter(
     (appointment) => appointment?.appointmentStatus === "pending",
   );

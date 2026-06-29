@@ -17,3 +17,7 @@ export const getDoctorById = async (doctorId) => {
 export const getPatientFavDoctor = async (patientId) => {
   return fetchDataSecurely(`/favorite-doctors/${patientId}`);
 };
+
+export const getTotalDoctors = async () => {
+  return fetchDataSecurely("/total-doctors");
+};

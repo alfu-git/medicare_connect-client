@@ -1,7 +1,7 @@
 import { fetchDataSecurely } from "../server/server";
 
 export const getAppointmentsByPatientId = async (patientId) => {
-  return await fetchDataSecurely(`/appointments/${patientId}`);
+  return await fetchDataSecurely(`/get-patient-appointments/${patientId}`);
 };
 
 // for patient
@@ -15,5 +15,11 @@ export const getAppointmentsByDoctorId = async (doctorId) => {
 
 // for doctor
 export const getAppointmentByAppointmentIdForDoctor = async (appointmentId) => {
-  return await fetchDataSecurely(`/patient-appointment-details/${appointmentId}`);
+  return await fetchDataSecurely(
+    `/patient-appointment-details/${appointmentId}`,
+  );
+};
+
+export const getTotalAppointments = async () => {
+  return fetchDataSecurely("/total-appointments");
 };

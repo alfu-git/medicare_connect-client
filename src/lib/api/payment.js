@@ -7,3 +7,7 @@ export const getPaymentsByPatientId = async (patientId) => {
 export const getPaymentsByDoctorId = async (doctorId) => {
   return fetchDataSecurely(`/doctor-payments/${doctorId}`);
 };
+
+export const getTotalPayments = async () => {
+  return fetchDataSecurely("/total-payments");
+};

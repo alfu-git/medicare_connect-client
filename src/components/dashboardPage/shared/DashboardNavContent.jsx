@@ -6,6 +6,7 @@ import { FaMoneyBill } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
 import {
   MdOutlineDashboard,
+  MdOutlineDateRange,
   MdOutlineHistory,
   MdReviews,
 } from "react-icons/md";
@@ -15,6 +16,8 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "@heroui/react";
 import { CgProfile } from "react-icons/cg";
+import { FaUserDoctor } from "react-icons/fa6";
+import { IoAnalyticsOutline } from "react-icons/io5";
 
 const DashboardNavContent = ({ user }) => {
   const pathname = usePathname();
@@ -80,23 +83,31 @@ const DashboardNavContent = ({ user }) => {
         href: "/dashboard/admin",
         label: "Dashboard",
       },
-      { icon: LuUsers, href: "/dashboard/admin/users", label: "Users" },
       {
-        icon: Factory,
-        href: "/dashboard/admin/companies",
-        label: "Companies",
+        icon: LuUsers,
+        href: "/dashboard/admin/manage-users",
+        label: "Manage Users",
       },
       {
-        icon: TbBriefcase2,
-        href: "/dashboard/admin/jobs",
-        label: "Jobs",
+        icon: FaUserDoctor,
+        href: "/dashboard/admin/manage-doctors",
+        label: "Manage Doctors",
+      },
+      {
+        icon: MdOutlineDateRange,
+        href: "/dashboard/admin/manage-appointments",
+        label: "Manage Appointments",
       },
       {
         icon: FaMoneyBill,
-        href: "/dashboard/admin/payments",
-        label: "Payments",
+        href: "/dashboard/admin/payment-management",
+        label: "Payment Management",
       },
-      { icon: Gear, href: "/dashboard/recruiter/settings", label: "Settings" },
+      {
+        icon: IoAnalyticsOutline,
+        href: "/dashboard/admin/analytics",
+        label: "Analytics",
+      },
     ],
   };
 
