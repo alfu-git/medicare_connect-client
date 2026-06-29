@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Gear,
-  House,
-  Magnifier,
-  CirclePlus,
-  Factory,
-  Envelope,
-  Person,
-} from "@gravity-ui/icons";
+import { Gear, Factory } from "@gravity-ui/icons";
 import Link from "next/link";
 import { FaMoneyBill } from "react-icons/fa";
 import { LuUsers } from "react-icons/lu";
@@ -21,14 +13,10 @@ import { RiPagesLine } from "react-icons/ri";
 import { TbBriefcase2 } from "react-icons/tb";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { authClient } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import { CgProfile } from "react-icons/cg";
 
-const DashboardNavContent = () => {
-  const { data: session } = authClient.useSession();
-  const user = session?.user;
-
+const DashboardNavContent = ({ user }) => {
   const pathname = usePathname();
 
   const allNavItems = {

@@ -11,7 +11,7 @@ import { authClient } from "@/lib/auth-client";
 import AvatarDropdown from "./AvatarDropdown";
 import DNALoader from "../loading/DNALoader";
 
-const Navbar = () => {
+const Navbar = ({ userFromDB }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const { data: session, isPending } = authClient.useSession();
@@ -60,7 +60,7 @@ const Navbar = () => {
       {user?.email && (
         <li>
           <Link
-            href={`/dashboard/${user?.role}`}
+            href={`/dashboard/${userFromDB?.role}`}
             className={`text-sm ${pathname === `/dashboard/${user?.role}` ? "color-primary font-semibold" : "color-tertiary"}`}
           >
             Dashboard

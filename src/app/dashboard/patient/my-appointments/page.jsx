@@ -16,6 +16,7 @@ export async function generateMetadata({ params }) {
 
 const PatientAppointmentsPage = async () => {
   const user = await getUser();
+
   const appointments = await getAppointmentsByPatientId(user?.id);
 
   return (

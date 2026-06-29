@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import { getUser } from "./get-user";
+import { getUserFromDB } from "./get-user";
 
 export const requireRole = async (role) => {
-  const user = await getUser();
+  const user = await getUserFromDB();
 
   if (!user) {
     return redirect("/login");

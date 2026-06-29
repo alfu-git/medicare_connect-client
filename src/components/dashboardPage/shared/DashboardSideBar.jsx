@@ -4,7 +4,7 @@ import DashboardNavContent from "./DashboardNavContent";
 import Link from "next/link";
 import { RiArrowLeftLongLine } from "react-icons/ri";
 
-export async function DashboardSideBar() {
+export async function DashboardSideBar({ user }) {
   const backHomeBtn = (
     <Link href={"/"}>
       <Button
@@ -22,7 +22,7 @@ export async function DashboardSideBar() {
     <>
       <aside className="hidden z-50 w-60 pt-5 shrink-0 border-r border-default lg:block bg-secondary">
         {backHomeBtn}
-        <DashboardNavContent />
+        <DashboardNavContent user={user} />
       </aside>
 
       <Drawer>
@@ -43,8 +43,9 @@ export async function DashboardSideBar() {
               <Drawer.Header>
                 <Drawer.Heading>{backHomeBtn}</Drawer.Heading>
               </Drawer.Header>
+
               <Drawer.Body>
-                <DashboardNavContent />
+                <DashboardNavContent user={user} />
               </Drawer.Body>
             </Drawer.Dialog>
           </Drawer.Content>
