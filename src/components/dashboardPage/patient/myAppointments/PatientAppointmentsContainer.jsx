@@ -41,17 +41,17 @@ const PatientAppointmentsContainer = ({ appointments, postReviewWrapper }) => {
       {/* ✅ Tabs (Right aligned) */}
       <div className="flex justify-end gap-3 mt-5">
         {["pending", "completed", "rejected"].map((tab) => (
-          <button
+          <Button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`px-4 py-1 rounded-full text-sm font-medium transition ${
               activeTab === tab
                 ? "bg-secondary text-white"
-                : "bg-gray-100 text-gray-600"
+                : "bg-gray-200 text-gray-600"
             }`}
           >
             {tab.charAt(0).toUpperCase() + tab.slice(1)}
-          </button>
+          </Button>
         ))}
       </div>
 
@@ -172,7 +172,16 @@ const PatientAppointmentsContainer = ({ appointments, postReviewWrapper }) => {
                       </Link>
 
                       {appointment?.review === "completed" ? (
-                        <></>
+                        <Link
+                          href={"/dashboard/patient/my-reviews"}
+                          className="block w-full"
+                        >
+                          <Button
+                            className={"w-full bg-fuchsia-600 rounded-md"}
+                          >
+                            View Review
+                          </Button>
+                        </Link>
                       ) : (
                         <GiveReviewModal
                           appointment={appointment}

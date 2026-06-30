@@ -9,52 +9,44 @@ import {
   TextArea,
   useOverlayState,
 } from "@heroui/react";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaStar } from "react-icons/fa";
 
-const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
-  const [reviewValue, setReviewValue] = useState("");
-  const [rating, setRating] = useState(0);
+const ReviewUpdateModal = ({ review, updateReviewWrapper }) => {
+  const [reviewValue, setReviewValue] = useState(review?.review || "");
+  const [rating, setRating] = useState(review?.rating || 0);
   const [hover, setHover] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const initialReview = review?.review || "";
+  const initialRating = review?.rating || 0;
+
   const state = useOverlayState();
-  const router = useRouter();
+
+  const isChanged = reviewValue !== initialReview || rating !== initialRating;
 
   const formInComplete =
-    !reviewValue || reviewValue.length < 20 || rating === 0;
+    !reviewValue || reviewValue.length < 20 || rating === 0 || !isChanged;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formInComplete) {
-      return;
-    }
+    if (formInComplete) return;
 
     try {
       setLoading(true);
 
-      const payload = {
-        patientId: appointment?.patientId,
-        patientName: appointment?.patientName,
-        patientImage: appointment?.patientImage,
-        doctorId: appointment?.doctorId,
-        doctorName: appointment?.doctorName,
-        doctorImage: appointment?.doctorImage,
-        appointmentId: appointment?._id,
+      const updatedReview = {
         review: reviewValue,
         rating,
       };
 
-      const res = await postReviewWrapper(payload);
+      const res = await updateReviewWrapper(review?._id, updatedReview);
 
-      if (res?.insertedId) {
-        toast.success("Review submitted successfully");
+      if (res?.modifiedCount > 0) {
+        toast.success("Review Updated Successful");
         state.close();
-        setReviewValue("");
-        setRating(0);
-        router.push("/dashboard/patient/my-reviews");
       }
     } catch (error) {
       console.log(error);
@@ -67,10 +59,10 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
   return (
     <Modal state={state}>
       <Button
-        onPress={state.open}
-        className="w-full bg-fuchsia-600 text-white px-6 py-3 rounded-md font-semibold flex items-center gap-2 mx-auto shadow-md hover:shadow-lg transition"
+        onClick={state.open}
+        className="px-4 py-1.5 text-sm border border-[#17a2b8] bg-[#17a2b8] rounded-md text-white transition-all duration-300"
       >
-        Give Review
+        Update
       </Button>
 
       <Modal.Backdrop>
@@ -93,7 +85,6 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
             <Modal.Body className="p-6">
               <Surface variant="default">
                 <Form className="space-y-6" onSubmit={handleSubmit}>
-                  {/* review */}
                   <div className="flex w-full flex-col gap-2">
                     <Label className="text-base mb-3">Review</Label>
 
@@ -102,6 +93,7 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Button
                           key={star}
+                          type="button"
                           onClick={() => setRating(star)}
                           onMouseEnter={() => setHover(star)}
                           onMouseLeave={() => setHover(null)}
@@ -135,7 +127,6 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
                     )}
                   </div>
 
-                  {/* CTA */}
                   <Modal.Footer>
                     <Button
                       slot="close"
@@ -152,7 +143,7 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
                         "bg-[#17a2b8] hover:bg-[#17a2b8]/80 active:bg-[#17a2b8]/90 rounded-md"
                       }
                     >
-                      {loading ? "Please Wait..." : "Submit"}
+                      {loading ? "Please Wait..." : "Send"}
                     </Button>
                   </Modal.Footer>
                 </Form>
@@ -165,4 +156,4 @@ const GiveReviewModal = ({ appointment, postReviewWrapper }) => {
   );
 };
 
-export default GiveReviewModal;
+export default ReviewUpdateModal;

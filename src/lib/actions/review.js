@@ -10,3 +10,28 @@ export const postReview = async (reviewData) => {
 
   return res;
 };
+
+export const updateReview = async (reviewId, updatedReview) => {
+  console.log(reviewId, updatedReview);
+  const res = await serverMutation(
+    `/patient-review/${reviewId}`,
+    updatedReview,
+    "PATCH",
+  );
+
+  if (res?.modifiedCount > 0) {
+    revalidatePath("/dashboard/patient/my-reviews");
+  }
+
+  return res;
+};
+
+export const deleteReview = async (reviewId) => {
+  const res = await serverMutation(`/patient-review/${reviewId}`, {}, "DELETE");
+
+  if (res?.deletedCount > 0) {
+    revalidatePath("/dashboard/patient/my-reviews");
+  }
+
+  return res;
+};
