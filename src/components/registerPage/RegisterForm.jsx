@@ -67,6 +67,11 @@ const RegisterForm = () => {
 
       if (data) {
         toast.success(<h6 className="font-bold">Register Completed</h6>);
+
+        fetch(`http://localhost:5000/send-email?name=${name}&email=${email}`, {
+          method: "POST",
+        });
+
         router.push("login");
       }
     } catch (error) {
